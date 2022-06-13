@@ -5,7 +5,7 @@ A tool designed to screenshot a web application's homepage from a list of URL's,
 Put your IP addresses, URL's or domain names in a file, and pass it to the script. Optionally, you can specify ports to check on each host by using the '--ports=' arguement.
 
 ```
-> python screenshot-tool.py url-list --ports=80,443,8080,8443
+> python web-screenshotter.py url-list --ports=80,443,8080,8443
 ```
 An example of a list of hosts is as follows:
 ```
