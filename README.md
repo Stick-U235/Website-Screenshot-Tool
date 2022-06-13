@@ -16,7 +16,7 @@ spotify.com
 https://10.0.4.54
 ```
 # Requirements
-_selenium_ and _requests_, both available via pip. Also make sure _chromedriver_ is in your path.
+_selenium_ and _requests_, both available via pip. Also make sure _chromedriver_ is in your path. It's usually auto-added if installed via pacman, apt or brew.
 
 ### TODO's and Bug Fixes in Progress
 - Adding invalid SSL certificate accommodations.
