@@ -1,6 +1,7 @@
 import os
 import sys
 import argparse
+import ssl
 from urllib.parse import urlparse
 from http.client import HTTPConnection, HTTPSConnection
 from selenium import webdriver
@@ -13,13 +14,15 @@ parser.add_argument('hosts', type=argparse.FileType('r'),
                     help="File containing URL's, IP addresses, or a mix")
 parser.add_argument('--ports', type=str, required=False,
                     help="Specify which ports to try. Default is 80 is SSL is not detected, 443 if it is")
+parser.add_argument('--ignore-ssl', action='store_true', required=False,
+                            help="Ignore certificate and other SSL-related errors")
 args = parser.parse_args()
 
 # Extracting port numbers from arg by splitting at the comma
 d = vars(args)
 if "ports" in d.keys() and args.ports:
     d["ports"] = [s.strip() for s in d["ports"].split(",")]
-#print (args.ports)
+
 url_file = args.hosts.readlines()
 
 
@@ -53,8 +56,9 @@ def check_ssl(url):
     print("Checking SSL support on: ", HTTPS_URL)
 
     try:
+        print('Trying to see if ssl supported')
         HTTPS_URL = urlparse(HTTPS_URL)
-        connection = HTTPSConnection(HTTPS_URL.netloc, timeout=5)
+        connection = HTTPSConnection(HTTPS_URL.netloc, timeout=5, context=ssl._create_unverified_context())
         connection.request('HEAD', HTTPS_URL.path)
         if connection.getresponse():
             print("SSL is supported")
@@ -62,7 +66,7 @@ def check_ssl(url):
         else:
             print("SSL is not supported.")
             return False
-    except:
+    except: 
         return False
 
 
@@ -75,6 +79,12 @@ def take_screenshot(url):
     driver_path_var = 'chromedriver'
     chrome_options.add_argument('--headless')
     chrome_options.add_argument("--window-size=1920x1080")
+    if args.ignore_ssl:
+        print('Ignoring SSL errors')
+        chrome_options.add_argument('acceptInsecureCerts')
+        chrome_options.add_argument('ignore-certificate-errors')
+        chrome_options.add_argument('allow-running-insecure-content')
+
     driver = webdriver.Chrome(options=chrome_options, executable_path='chromedriver')
     driver.set_page_load_timeout(10) #Setting timeout, maybe make user modifiable as arg
 
