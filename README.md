@@ -19,6 +19,5 @@ https://10.0.4.54
 _selenium_ and _requests_, both available via pip. Also make sure _chromedriver_ is in your path. It's usually auto-added if installed via pacman, apt or brew.
 
 ### TODO's and Bug Fixes in Progress
-- Adding invalid SSL certificate accommodations.
 - Add support for when a user specifies a port on a host in the host list _and_ as an arg.
 - Probably implementing multithreading for speed increase.
