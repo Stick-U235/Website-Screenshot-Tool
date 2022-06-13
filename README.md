@@ -10,8 +10,10 @@ Put your IP addresses, URL's or domain names in a file, and pass it to the scrip
 An example of a list of hosts is as follows:
 ```
 192.168.12.4
-192.168.12.22
+http://192.168.12.22
 https://google.com/
 spotify.com
 https://10.0.4.54
 ```
+# Requirements
+_selenium_ and _requests_, both available via pip. Also make sure _chromedriver_ is in your path.
